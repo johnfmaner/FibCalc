@@ -62,6 +62,8 @@
             }
 
             Console.WriteLine("Here you are, the {0}th value of the Fibonacci sequence is: {1} ", n,final);
+            Console.WriteLine("Press any key to close the program...");
+            Console.ReadKey();
         }
     }
 }
