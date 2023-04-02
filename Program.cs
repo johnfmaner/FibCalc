@@ -4,48 +4,58 @@
     {
         static void Main(string[] args)
         {
-            // get user's input 
-            Console.WriteLine("Provide the Nth number of the Fibonacci sequence you'd like: ");
-            string inputNumber = Console.ReadLine();
 
             int n; // Nth value of Fib Sequence 
 
-            // catch bad inputs 
-            try
+            // get user's input, prompt again if the input isn't between 1-73 
+            do
             {
-                n = int.Parse(inputNumber);
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("'{0}' cannot be parsed as a number.", inputNumber);
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("The input number is too large.");
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine("The input number is too large.");
-            }
+                Console.WriteLine("Provide the Nth number of the Fibonacci sequence you'd like, between 1-73: ");
 
-            // parse input into an Int now that we know it's valid 
-            n = int.Parse(inputNumber);
+                string inputNumber = "1";
+                inputNumber = Console.ReadLine();
 
-            // check that we don't have negatives 
-            if (n < 0)
-            {
-                throw new Exception("Negative number is not allowed");
+                // catch bad input exceptions  
+                try
+                {
+                    n = int.Parse(inputNumber);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("'{0}' cannot be parsed as a number.", inputNumber);
+                    Console.WriteLine("Provide the Nth number of the Fibonacci sequence you'd like, between 1-73: ");
+                    inputNumber = Console.ReadLine();
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("The input number is too large.");
+                    Console.WriteLine("Provide the Nth number of the Fibonacci sequence you'd like, between 1-73: ");
+                    inputNumber = Console.ReadLine();
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine("The input number is too large.");
+                    Console.WriteLine("Provide the Nth number of the Fibonacci sequence you'd like, between 1-73: "); 
+                    inputNumber = Console.ReadLine();
+                }
+                finally
+                {
+                    n = int.Parse(inputNumber);
+                }
+
             }
+            while (n < 0 || n > 73); 
+
 
             // now calculate the nth value 
-            int final = 1;
+            long final = 1; // can only store up to n=73, otherwise rolls over to negative 
 
             {
                 if (n != 1 || n != 2) // compute for non trivial values of n 
                 { 
                     int index = 3;
-                    int nMinusOne = 1;
-                    int nMinusTwo = 1;
+                    long nMinusOne = 1;
+                    long nMinusTwo = 1;
 
                     while (index <= n) // case for n>= 3 
                     {
@@ -61,6 +71,7 @@
                 }
             }
 
+            // show the user 
             Console.WriteLine("Here you are, the {0}th value of the Fibonacci sequence is: {1} ", n,final);
             Console.WriteLine("Press any key to close the program...");
             Console.ReadKey();
